@@ -28,10 +28,16 @@ def upload_file():
             subprocess.run(statement, check=True)
             a = model.predict("./uploads/" + newname + '.csv')
             time.sleep(1)
+            if os.path.exists("./uploads/" + newname + '.csv'):
+                os.remove("./uploads/" + newname + '.csv')
+            
+            if os.path.exists("./uploads/" + filename ):
+                os.remove("./uploads/" + newname)
             return a
             return send_file(os.path.join(app.config['UPLOAD_FOLDER'], newname + '.csv'), as_attachment=True)
         
         except Exception:
+            print(E)
             return "Error"
             
 
